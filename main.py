@@ -5,7 +5,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import defs
 
-indice = input("Input your CPF or CNPJ. Only numbers: ")
+indice_input = input("Input your CPF or CNPJ. Only numbers: ")
+indice = defs.validador_cpf_cnpj(indice_input)
+
 email_antigo = input("Input the old email: ")
 new_email = input("Input the new email: ")
 
@@ -65,7 +67,7 @@ confirmar = input("Confirma alteração do email? (s/n): ").lower()
 valido = defs.gmail_validator(email_sistema, email_antigo)
 
 if valido and confirmar == "s":
-    new_email(wait, driver)
+    defs.insert_new_email(wait, driver)
 
 else:
     print("Operação cancelada.")

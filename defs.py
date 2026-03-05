@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
+import re
 import time
 
 def retry_click(func):
@@ -23,6 +24,16 @@ def busca_text (wait, tag, text):
     )
     click_text.click()
     return click_text
+
+def validador_cpf_cnpj(documento):
+    documento = re.sub(r'\D', '', documento)
+
+    if len(documento) == 11:
+        return "CPF"
+    elif len(documento) == 14:
+        return "CNPJ"
+    else:
+        raise ValueError("Documento inválido. Deve ser CPF (11 dígitos) ou CNPJ (14 dígitos).")
 
 def login (wait, driver, email, senha):
     usuario = wait.until(
@@ -114,7 +125,7 @@ def email_validator(email_sistema, email_antigo):
         print("Email informado não bate com o cadastro.")
         return False
 
-def new_email (wait, driver):
+def insert_new_email (wait, driver):
     campo_email = wait.until(
         EC.element_to_be_clickable((By.ID, "input-email"))
     )
