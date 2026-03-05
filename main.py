@@ -67,7 +67,7 @@ confirmar = input("Confirma alteração do email? (s/n): ").lower()
 valido = defs.gmail_validator(email_sistema, email_antigo)
 
 if valido and confirmar == "s":
-    defs.insert_new_email(wait, driver)
+    defs.insert_new_email(wait, driver, new_email)
 
 else:
     print("Operação cancelada.")
